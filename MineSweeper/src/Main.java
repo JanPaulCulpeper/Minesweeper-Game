@@ -2,10 +2,10 @@ import javax.swing.JFrame;
 
 public class Main {
 	public static void main(String[] args) {
-		JFrame myFrame = new JFrame("Bienve's Grid");
+		JFrame myFrame = new JFrame("Mine Sweeper");
 		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		myFrame.setLocation(400, 150);
-		myFrame.setSize(900, 900);
+		myFrame.setLocation(500, 100);
+		myFrame.setSize(800, 800);
 
 		MyPanel myPanel = new MyPanel();
 		myFrame.add(myPanel);
@@ -14,5 +14,6 @@ public class Main {
 		myFrame.addMouseListener(myMouseAdapter);
 
 		myFrame.setVisible(true);
+		
 	}
 }
