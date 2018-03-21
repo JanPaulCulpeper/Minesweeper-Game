@@ -14,11 +14,18 @@ public class MyPanel extends JPanel {
 	private static final int INNER_CELL_SIZE = 70;
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 10;   //Last row has only one cell
+	public static final int bombs = 10;
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
+	public int counterBomb = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int [][] bomb = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int [][] numbers = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public boolean[][] bombArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	public boolean[][] flag = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int[][] bombRandomArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -60,38 +67,45 @@ public class MyPanel extends JPanel {
 		//Draw the grid minus the bottom row (which has only one cell)
 		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
 		g.setColor(Color.BLACK);
-		for (int y = 0; y <= TOTAL_ROWS -1 ; y++) {
-			g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)));
+
+		for (int y = 0; y <= TOTAL_ROWS; y++) {
+			g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1 )));
 		}
 		for (int x = 0; x <= TOTAL_COLUMNS; x++) {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS -1 )));
 		}
 
 		//Draw an additional cell at the bottom left
-//		g.drawRect(x1 + GRID_X, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS )), INNER_CELL_SIZE + 1, INNER_CELL_SIZE + 1);
+//		g.drawRect(x1 + GRID_X, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)), INNER_CELL_SIZE + 1, INNER_CELL_SIZE + 1);
 
 		//Paint cell colors
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
-			for (int y = 0; y < TOTAL_ROWS-1; y++) {
+			for (int y = 0; y < TOTAL_ROWS -1; y++) {
 				if ((x == 0) || (y != TOTAL_ROWS -1 )) {
 					Color c = colorArray[x][y];
 					g.setColor(c);
-					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);				
 				}
 			}
 		}
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {
+			for (int y = 0; y < TOTAL_ROWS -1; y++) {
+				if ((x == 0) || (y != TOTAL_ROWS -1 )) {
+					Color black = colorArray[x][y];
+					g.setColor(black);
+					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
+					g.setColor(Color.black);
+				}
+			}
+		}
+		
 	}
-
-
 	// This method helps to find the adjacent boxes that don't have a mine.
 	// It is partially implemented since the verify hasn't been discussed in class
 	// Verify that the coordinates in the parameters are valid.
 	// Also verifies if there are any mines around the x,y coordinate
 	public void revealAdjacent(int x, int y){
-		if((x<0) || (y<0) || (x>=9) || (y>=9))
-		{
-			return;
-			}
+		if((x<0) || (y<0) || (x>=9) || (y>=9)){return;}
 
 		else {
 			colorArray[x][y] = Color.GRAY;
@@ -105,9 +119,6 @@ public class MyPanel extends JPanel {
 
 	}
 	
-
-
-
 	public int getGridX(int x, int y) {
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;
@@ -158,6 +169,4 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
-
-
 }
