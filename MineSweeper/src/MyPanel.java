@@ -88,7 +88,10 @@ public class MyPanel extends JPanel {
 	// Verify that the coordinates in the parameters are valid.
 	// Also verifies if there are any mines around the x,y coordinate
 	public void revealAdjacent(int x, int y){
-		if((x<0) || (y<0) || (x>=9) || (y>=9)){return;}
+		if((x<0) || (y<0) || (x>=9) || (y>=9))
+		{
+			return;
+			}
 
 		else {
 			colorArray[x][y] = Color.GRAY;
@@ -155,4 +158,6 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
+
+
 }
