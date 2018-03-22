@@ -36,14 +36,8 @@ public class MyPanel extends JPanel {
 		if (TOTAL_ROWS + (new Random()).nextInt(1) < 3) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
-		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //Top row
-			colorArray[x][0] = Color.WHITE;
-		}
-		for (int y = 0; y < TOTAL_ROWS; y++) {   //Left column
-			colorArray[0][y] = Color.WHITE;
-		}
-		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
-			for (int y = 1; y < TOTAL_ROWS; y++) {
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
+			for (int y = 0; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
@@ -60,9 +54,11 @@ public class MyPanel extends JPanel {
 		int y2 = getHeight() - myInsets.bottom;
 		int width = x2 - x1;
 		int height = y2 - y1;
+		
+		
 
 		//Paint the background
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(x1, y1, width + 1, height + 1);//The rest of the grid
 		
 	
@@ -140,6 +136,7 @@ public class MyPanel extends JPanel {
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 2) {   //Outside the rest of the grid
 			return -1;
 		}
+		System.out.println(x);
 		return x;
 	}
 	public int getGridY(int x, int y) {
@@ -165,6 +162,8 @@ public class MyPanel extends JPanel {
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 2) {   //Outside the rest of the grid
 			return -1;
 		}
+		
 		return y;
 	}
+	
 }
