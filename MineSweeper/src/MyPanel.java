@@ -47,6 +47,7 @@ public class MyPanel extends JPanel {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
+		
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -62,7 +63,14 @@ public class MyPanel extends JPanel {
 
 		//Paint the background
 		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(x1, y1, width + 1, height + 1);
+		g.fillRect(x1, y1, width + 1, height + 1);//The rest of the grid
+		
+	
+				
+		g.setColor(Color.BLACK);
+		g.fillRect(x1, y1, x1, y2);
+		
+		
 
 		//Draw the grid minus the bottom row (which has only one cell)
 		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
@@ -88,16 +96,6 @@ public class MyPanel extends JPanel {
 				}
 			}
 		}
-		for (int x = 0; x < TOTAL_COLUMNS; x++) {
-			for (int y = 0; y < TOTAL_ROWS -1; y++) {
-				if ((x == 0) || (y != TOTAL_ROWS -1 )) {
-					Color black = colorArray[x][y];
-					g.setColor(black);
-					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
-					g.setColor(Color.black);
-				}
-			}
-		}
 		
 	}
 	// This method helps to find the adjacent boxes that don't have a mine.
@@ -108,7 +106,7 @@ public class MyPanel extends JPanel {
 		if((x<0) || (y<0) || (x>=9) || (y>=9)){return;}
 
 		else {
-			colorArray[x][y] = Color.GRAY;
+			colorArray[x][y] = Color.BLACK;//Lineas Negras
 			revealAdjacent(x-1, y);
 			revealAdjacent(x+1, y);
 			revealAdjacent(x, y-1);
