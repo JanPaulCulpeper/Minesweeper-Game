@@ -1,12 +1,8 @@
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -24,7 +20,6 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public int counterBomb = 1;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Random rand = new Random();
 	public String neighboresCount[][] = new String[TOTAL_COLUMNS][TOTAL_ROWS];
@@ -57,14 +52,14 @@ public class MyPanel extends JPanel {
 		}
 		for (int i = 0; i < TOTAL_COLUMNS; i++) {  
 			for (int j = 0; j < TOTAL_ROWS; j++) {
-			if(rand.nextInt(100) < 20) { //make a 10% of mine in the ground
+			if(rand.nextInt(100) < 20) { //make a 20% of mine in the ground
 				mines[i][j] = 1;
 			}else {
 				mines[i][j] = 0;
 			}
 			}
 		}
-		for (int x=0;x<TOTAL_COLUMNS;x++)//Array of neighborers mines
+		for (int x=0;x<TOTAL_COLUMNS;x++)//Array to set neighborers mines
 		{
 			for (int y = 0; y < TOTAL_ROWS; y++)
 			{
@@ -131,16 +126,38 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS -1; y++) {
 				Color c = colorArray[x][y];
+				
 
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
+					if(revealed[x][y] == true) {
+						if(neighbours[x][y] == 1) {
+							g.setColor(Color.BLUE);
+							g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+							g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
+						}else {
+							if(neighbours[x][y] == 2) {
+								g.setColor(Color.GREEN);
+								g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+								g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
+							}else {
+								if(neighbours[x][y] == 3) {
+									g.setColor(Color.RED);
+									g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+									g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
+								}else {
+									if(neighbours[x][y] == 4) {
+										g.setColor(new Color(0,0,128));
+										g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+										g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
+									}
+								}
+							}
+							
+						}
 					
-					g.setColor(Color.WHITE);
-					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 24));
-					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 95, (y * 70) + 110);
-					g.setColor(Color.LIGHT_GRAY);
-					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
-					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
+					
+					}
 					if(flagged[x][y] == true) {
 						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y  * 70) + 134);
 					}
@@ -219,8 +236,10 @@ public class MyPanel extends JPanel {
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 2) {   //Outside the rest of the grid
 			return -1;
 		}
-		return y;
-	}public void Clearing(int xpos, int ypos)
+		return y;	
+	}
+	
+	public void Clearing(int xpos, int ypos)
 	{
 		if(neighbours[xpos][ypos] != 0)
 		{

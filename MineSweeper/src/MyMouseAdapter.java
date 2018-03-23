@@ -3,15 +3,12 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-
 import javax.swing.JFrame;
 
 
 
 
 public class MyMouseAdapter extends MouseAdapter {
-	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 			case 1:		//Left mouse button
@@ -71,7 +68,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				
 				if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
 					//Had pressed outside
-					//Do nothinr
+					//Do nothing
 				} else {
 					if ((gridX == -1) || (gridY == -1)) {
 						//Is releasing outside
