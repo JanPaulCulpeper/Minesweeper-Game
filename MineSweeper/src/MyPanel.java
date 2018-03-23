@@ -28,6 +28,7 @@ public class MyPanel extends JPanel {
 	public int smileyY = 10;
 	public boolean happiness = true;
 	
+	
 	Date startDate = new Date();
 	public int timeX = 520;
 	public int timeY = 25;
@@ -107,6 +108,7 @@ public class MyPanel extends JPanel {
 			}
 		}
 	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
@@ -149,7 +151,7 @@ public class MyPanel extends JPanel {
 							g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 						}else {
 							if(neighbours[x][y] == 2) {
-								g.setColor(Color.GREEN);
+								g.setColor(Color.green);
 								g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
 								g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 							}else {
@@ -190,6 +192,7 @@ public class MyPanel extends JPanel {
 			g.fillRect(smileyX+15, smileyY+45, 5, 5);
 			g.fillRect(smileyX+50, smileyY+45, 5, 5);
 		}else {
+			
 			g.setColor(Color.RED);
 			g.fillOval(smileyX, smileyY, 70, 70);
 			g.setColor(Color.BLACK);
@@ -205,13 +208,25 @@ public class MyPanel extends JPanel {
 		g.setColor(Color.black);
 		g.fillRect(timeX, timeY, 170, 60);
 		sec = (int) ((new Date().getTime()-startDate.getTime())/1000);
-		System.out.println(sec);
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Eras Bold ITC", Font.BOLD, 60));
-		g.drawString(Integer.toString(sec), timeX, timeY+50);
-		g.setFont(new Font("Eras Bold ITC", Font.BOLD, 15));
-		g.drawString("sec", timeX+142, timeY+55);
+		if(sec > 999) {
+			sec = 999;
 		}
+		g.setColor(Color.WHITE);
+			g.setFont(new Font("Eras Bold ITC", Font.BOLD, 60));
+			if(sec < 10) {
+				g.drawString("00"+Integer.toString(sec), timeX, timeY+50);
+			}else {
+				if(sec <100) {
+					g.drawString("0"+Integer.toString(sec), timeX, timeY+50);
+				}else {
+					g.drawString(Integer.toString(sec), timeX, timeY+50);
+				}
+			}
+			g.setFont(new Font("Eras Bold ITC", Font.BOLD, 15));
+			g.drawString("sec", timeX+142, timeY+55);
+			}
+		
+
 	
 
 	// This method helps to find the adjacent boxes that don't have a mine.

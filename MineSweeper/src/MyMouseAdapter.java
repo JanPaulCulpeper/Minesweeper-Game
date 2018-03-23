@@ -52,6 +52,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					if (c == null) {
 						return;
 					}
+					
 				}
 				JFrame myFrame = (JFrame)c;
 				MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
