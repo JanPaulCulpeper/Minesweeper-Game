@@ -123,7 +123,7 @@ public class MyPanel extends JPanel {
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
 					
 					g.setColor(Color.WHITE);
-					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 24));
 					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 95, (y * 70) + 110);
 					if(flagged[x][y] == true) {
 						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 38, (y  * 30) + 44);
