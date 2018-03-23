@@ -1,14 +1,18 @@
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 3426940946811133635L;
-	private static final int GRID_X = 65;
-	private static final int GRID_Y = 65;
+	private static final int GRID_X = 50;
+	private static final int GRID_Y = 90;
 	private static final int INNER_CELL_SIZE = 70;
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 10;   //Last row has only one cell
@@ -24,6 +28,15 @@ public class MyPanel extends JPanel {
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Random rand = new Random();
 	public String neighboresCount[][] = new String[TOTAL_COLUMNS][TOTAL_ROWS];
+
+	 
+	public int getTotal_Columns() {
+		return TOTAL_COLUMNS;
+	}
+	
+	public int getTotal_Rows() {
+		return TOTAL_ROWS;
+	}
 	
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
@@ -37,7 +50,7 @@ public class MyPanel extends JPanel {
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				colorArray[x][y] = Color.WHITE;
+				colorArray[x][y] = Color.LIGHT_GRAY;
 				revealed[x][y] = false;
 				flagged[x][y] = false;
 			}
@@ -100,7 +113,7 @@ public class MyPanel extends JPanel {
 		int height = y2 - y1;
 
 		//Paint the background
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(x1, y1, width + 1, height + 1);//The rest of the grid
 	
 		//Draw the grid minus the bottom row (which has only one cell)
@@ -125,8 +138,11 @@ public class MyPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 24));
 					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 95, (y * 70) + 110);
+					g.setColor(Color.LIGHT_GRAY);
+					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 					if(flagged[x][y] == true) {
-						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 38, (y  * 30) + 44);
+						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y  * 70) + 134);
 					}
 
 			}
@@ -275,4 +291,6 @@ public class MyPanel extends JPanel {
 			}
 		
 	}
+
+		
 }
