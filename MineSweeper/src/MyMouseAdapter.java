@@ -7,6 +7,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+
+
+
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
@@ -18,6 +21,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					if (c == null) {
 						return;
 					}
+
 				}
 				JFrame myFrame = (JFrame) c;
 				MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
@@ -173,6 +177,10 @@ public class MyMouseAdapter extends MouseAdapter {
 				//Some other button (2 = Middle mouse button, etc.)
 				//Do nothing
 				break;
-		}}}
-		
+				
+		}
+		}
+	}
+
+
 	
