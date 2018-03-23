@@ -1,9 +1,8 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
 import java.util.Random;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -14,7 +13,7 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 10;   //Last row has only one cell
 	public int [][] mines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	public int [][] neighbores = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int [][] neighbours = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	public boolean [][] revealed = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	public boolean [][] flagged = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	public int x = -1;
@@ -60,6 +59,41 @@ public class MyPanel extends JPanel {
 			}
 			}
 		}
+		for (int x=0;x<TOTAL_COLUMNS;x++)//Array of neighborers mines
+		{
+			for (int y = 0; y < TOTAL_ROWS; y++)
+			{
+				if(mines[x][y] != 1)
+				{
+					int neighborCount = 0;
+					if(x > 0 && y > 0 && mines[x-1][y-1] == 1)//top left 
+						neighborCount++;
+					if(x > 0 && y < mines.length-1 && mines[x-1][y+1] == 1)//down left 
+						neighborCount++;
+					if(x > 0 && mines[x-1][y] == 1)//left
+						neighborCount++;
+					if(y > 0 && mines[x][y-1] == 1)//top
+						neighborCount++;
+					if(y < mines.length -1 && mines[x][y+1] == 1)//bottom
+						neighborCount++;
+					if(x < mines.length -1 && y < mines.length -1 && mines[x+1][y+1] == 1)//down right
+						neighborCount++;
+					if(y > 0 && x < mines.length -1 && y < mines.length && mines[x+1][y-1] == 1)//top right
+						neighborCount++;
+					if(x < mines.length -1 && mines[x+1][y] == 1)//Right
+						neighborCount++;
+					
+					neighbours[x][y]=neighborCount;
+					if(neighborCount == 0)
+						neighboresCount[x][y] = "";
+					else
+						neighboresCount[x][y] = String.valueOf(neighbours[x][y]);
+				}
+				else {
+					neighboresCount[x][y] = " ";
+				}
+			}
+		}
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -88,9 +122,6 @@ public class MyPanel extends JPanel {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS -1 )));
 		}
 
-		//Draw an additional cell at the bottom left
-//		g.drawRect(x1 + GRID_X, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)), INNER_CELL_SIZE + 1, INNER_CELL_SIZE + 1);
-
 		//Paint cell colors
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS -1; y++) {
@@ -98,15 +129,17 @@ public class MyPanel extends JPanel {
 
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
-//					g.setColor(Color.WHITE);
-//					g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+38, (y*30)+44);
 					
-//					if(flagged[x][y] == true) {
-//						g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+38, (y*30)+44);
+					g.setColor(Color.WHITE);
+					g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
+					g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 95, (y * 70) + 110);
+					if(flagged[x][y] == true) {
+						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 38, (y  * 30) + 44);
 					}
-			}
 
-	}
+			}
+		}
+		}
 	
 
 	// This method helps to find the adjacent boxes that don't have a mine.
@@ -179,5 +212,75 @@ public class MyPanel extends JPanel {
 			return -1;
 		}
 		return y;
+	}public void Clearing(int xpos, int ypos)
+	{
+		if(neighbours[xpos][ypos] != 0)
+		{
+			revealed[xpos][ypos]= true;
+			colorArray[xpos][ypos] = Color.GRAY;
+			return ;
+		}else
+			{
+				revealed[xpos][ypos] = true;
+				colorArray[xpos][ypos] = Color.GRAY;
+				if(xpos > 0 && ypos > 0 && revealed[xpos-1][ypos-1] != true )//top left 
+				{
+					revealed[xpos-1][ypos-1]= true;
+					colorArray[xpos-1][ypos-1] = Color.GRAY;
+					Clearing(xpos-1,ypos-1);
+				}
+						
+				if(xpos > 0 && ypos < mines.length-1 && revealed[xpos-1][ypos+1] != true  )//down left 
+				{
+					revealed[xpos-1][ypos+1]= true;
+					colorArray[xpos-1][ypos+1] = Color.GRAY;
+					Clearing(xpos-1,ypos+1);
+				}
+						
+				if(xpos > 0 && revealed[xpos-1][ypos] != true)//left
+				{
+					revealed[xpos-1][ypos]= true;
+					colorArray[xpos-1][ypos] = Color.GRAY;
+					Clearing(xpos-1,ypos);
+				}
+						
+				if(ypos > 0 && revealed[xpos][ypos-1] != true)//top
+				{
+					revealed[xpos][ypos-1]= true;
+					colorArray[xpos][ypos-1] = Color.GRAY;
+					Clearing(xpos,ypos-1);
+				}
+						
+				if(ypos<mines.length-1 &&  revealed[xpos][ypos+1] != true) //bottom
+				{
+					revealed[xpos][ypos+1]= true;
+					colorArray[xpos][ypos+1] = Color.GRAY;
+					Clearing(xpos,ypos+1);
+				}
+						
+				if(xpos < mines.length-1&& ypos < mines.length-1 && revealed [xpos+1][ypos+1] != true)//down right
+				{
+					revealed[xpos+1][ypos+1] = true;
+					colorArray[xpos+1][ypos+1] = Color.GRAY;
+					Clearing(xpos+1,ypos+1);
+				}
+						
+				if(ypos > 0 && xpos < mines.length -1 && ypos < mines.length && revealed[xpos+1][ypos-1]!=true)//top right
+				{
+					revealed[xpos+1][ypos-1]= true;
+					colorArray[xpos+1][ypos-1] = Color.GRAY;
+					Clearing(xpos+1,ypos-1);
+				}
+						
+				if(xpos < mines.length-1 && revealed[xpos+1][ypos] != true)//Right
+				{
+					revealed[xpos+1][ypos]= true;
+					colorArray[xpos+1][ypos] = Color.GRAY;
+					Clearing(xpos+1,ypos);
+				}
+						
+				
+			}
+		
 	}
 }
