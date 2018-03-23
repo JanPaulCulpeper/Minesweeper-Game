@@ -118,60 +118,63 @@ public class MyMouseAdapter extends MouseAdapter {
 						return;
 					}
 				}
-				JFrame myRightClickFrame = (JFrame)cr;
-				MyPanel myRightClickPanel = (MyPanel) myRightClickFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
-				Insets myRightClickInsets = myRightClickFrame.getInsets();
-				int xr1 = myRightClickInsets.left;
-				int yr1 = myRightClickInsets.top;
+				JFrame MRCF = (JFrame)cr;//My Right Click Frame (MRCF)
+				MyPanel MRCP = (MyPanel) MRCF.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+				Insets MRCI = MRCF.getInsets();
+				int xr1 = MRCI.left;
+				int yr1 = MRCI.top;
 				e.translatePoint(-xr1, -yr1);
 				int xr2 = e.getX();
 				int yr2 = e.getY();
-				myRightClickPanel.x = xr2;
-				myRightClickPanel.y = yr2;
-				int rightClickGridX = myRightClickPanel.getGridX(xr2, yr2);
-				int rightClickGridY = myRightClickPanel.getGridY(xr2, yr2);
-				myRightClickPanel.mouseDownGridX = myRightClickPanel.getGridX(xr2, yr2);
-				myRightClickPanel.mouseDownGridY = myRightClickPanel.getGridY(xr2, yr2);
+				MRCP.x = xr2;
+				MRCP.y = yr2;
+				int RCGridX = MRCP.getGridX(xr2, yr2);
+				int RCGridY = MRCP.getGridY(xr2, yr2);
+				MRCP.mouseDownGridX = MRCP.getGridX(xr2, yr2);
+				MRCP.mouseDownGridY = MRCP.getGridY(xr2, yr2);
 				
 				
-				if ((myRightClickPanel.mouseDownGridX == -1) || (myRightClickPanel.mouseDownGridY == -1)) {
+				if ((MRCP.mouseDownGridX == -1) || (MRCP.mouseDownGridY == -1)) {
 					//Had pressed outside
 					//Do nothing
 				} else {
-					if ((rightClickGridX == -1) || (rightClickGridY == -1)) {
+					if ((RCGridX == -1) || (RCGridY == -1)) {
 						//Is releasing outside
 						//Do nothing
 					} else {
-						if ((myRightClickPanel.mouseDownGridX != rightClickGridX) || (myRightClickPanel.mouseDownGridY != rightClickGridY)) {
+						if ((MRCP.mouseDownGridX != RCGridX) || (MRCP.mouseDownGridY != RCGridY)) {
 							//Released the mouse button on a different cell where it was pressed
 							//Do nothing
 							
 						} else {
 							//Released the mouse button on the same cell where it was pressed
-								if(myRightClickPanel.revealed[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY]!= true)
+								if(MRCP.revealed[MRCP.mouseDownGridX][MRCP.mouseDownGridY]!= true)
 									//does not let you mark revealed spaces
 								{
-									if(myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] == false)
+									if(MRCP.flagged[MRCP.mouseDownGridX][MRCP.mouseDownGridY] == false)
 										//paints the cell if it doesn't have a mine
-									myRightClickPanel.colorArray[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = Color.RED;
-									myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = true;
+									MRCP.colorArray[MRCP.mouseDownGridX][MRCP.mouseDownGridY] = Color.RED;
+									MRCP.flagged[MRCP.mouseDownGridX][MRCP.mouseDownGridY] = true;
 						
 								}else {
-									myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY]= false;
-									myRightClickPanel.colorArray[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = Color.WHITE;
+									MRCP.flagged[MRCP.mouseDownGridX][MRCP.mouseDownGridY]= false;
+									MRCP.colorArray[MRCP.mouseDownGridX][MRCP.mouseDownGridY] = Color.WHITE;
 					}
 						}
 					}
 				}
-							myRightClickPanel.repaint();
-							break;}
+							MRCP.repaint();
+							break;
+							}
+		
 					
-			break;
+		
 			default: 
 				//Some other button (2 = Middle mouse button, etc.)
 				//Do nothing
 				break;
 				}
+	
 	}
 }
 
