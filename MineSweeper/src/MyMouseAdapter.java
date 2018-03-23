@@ -90,6 +90,10 @@ public class MyMouseAdapter extends MouseAdapter {
 												if(myPanel.mines[i][j] == 1) //Paint mines cells black
 													myPanel.colorArray[i][j] =Color.BLACK;
 												myPanel.revealed[i][j] = true;
+												if(myPanel.revealed[i][j] = true) {
+													myPanel.happiness = false;
+												}
+													
 											}
 										}
 									

@@ -27,6 +27,8 @@ public class MyPanel extends JPanel {
 	public int smileyX = 333;
 	public int smileyY = 10;
 	public boolean happiness = true;
+	public boolean victory = false;
+	public boolean defeat = false;
 	
 	Date startDate = new Date();
 	public int timeX = 520;
@@ -75,7 +77,7 @@ public class MyPanel extends JPanel {
 		{
 			for (int y = 0; y < TOTAL_ROWS; y++)
 			{
-				if(mines[x][y] != 1)
+				if(mines[x][y] != 1)//Conditions to set neighborers mines around
 				{
 					int neighborCount = 0;
 					if(x > 0 && y > 0 && mines[x-1][y-1] == 1)//top left 
@@ -97,7 +99,7 @@ public class MyPanel extends JPanel {
 					
 					neighbours[x][y]=neighborCount;
 					if(neighborCount == 0)
-						neighboresCount[x][y] = "";
+						neighboresCount[x][y] = " ";
 					else
 						neighboresCount[x][y] = String.valueOf(neighbours[x][y]);
 				}
@@ -143,22 +145,22 @@ public class MyPanel extends JPanel {
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
 					if(revealed[x][y] == true) {
-						if(neighbours[x][y] == 1) {
+						if(neighbours[x][y] == 1) {//Paint the number 1
 							g.setColor(Color.BLUE);
 							g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
 							g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 						}else {
-							if(neighbours[x][y] == 2) {
+							if(neighbours[x][y] == 2) {//Paint the number 2
 								g.setColor(Color.GREEN);
 								g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
 								g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 							}else {
-								if(neighbours[x][y] == 3) {
+								if(neighbours[x][y] == 3) {//Paint the number 3
 									g.setColor(Color.RED);
 									g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
 									g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
 								}else {
-									if(neighbours[x][y] == 4) {
+									if(neighbours[x][y] == 4) {//Paint the number 4
 										g.setColor(new Color(0,0,128));
 										g.setFont(new Font("Eras Bold ITC", Font.BOLD, 20));
 										g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y * 70) + 134);
@@ -170,15 +172,10 @@ public class MyPanel extends JPanel {
 					
 					
 					}
-					if(flagged[x][y] == true) {
-						g.drawString(neighboresCount[x][y], x * (INNER_CELL_SIZE + 1) + 78, (y  * 70) + 134);
-					}
 
 			}
 		}
 		//Smiley face 
-		
-		
 		if(happiness == true) {
 			g.setColor(Color.YELLOW);
 			g.fillOval(smileyX, smileyY, 70, 70);
@@ -189,7 +186,8 @@ public class MyPanel extends JPanel {
 			g.fillRect(smileyX+20, smileyY+50, 30, 5);
 			g.fillRect(smileyX+15, smileyY+45, 5, 5);
 			g.fillRect(smileyX+50, smileyY+45, 5, 5);
-		}else {
+		}else {//bad face
+			if(happiness == false) {
 			g.setColor(Color.RED);
 			g.fillOval(smileyX, smileyY, 70, 70);
 			g.setColor(Color.BLACK);
@@ -199,8 +197,9 @@ public class MyPanel extends JPanel {
 			g.fillRect(smileyX+20, smileyY+45, 30, 5);
 			g.fillRect(smileyX+15, smileyY+50, 5, 5);
 			g.fillRect(smileyX+50, smileyY+50, 5, 5);
-			
-		}
+			}
+			}
+	
 		//timer
 		g.setColor(Color.black);
 		g.fillRect(timeX, timeY, 170, 60);
@@ -286,8 +285,7 @@ public class MyPanel extends JPanel {
 		return y;	
 	}
 	
-	public void Clearing(int xpos, int ypos)
-	{
+	public void Clearing(int xpos, int ypos)	{	//Clear the area that you touch 
 		if(neighbours[xpos][ypos] != 0)
 		{
 			revealed[xpos][ypos]= true;
@@ -332,7 +330,7 @@ public class MyPanel extends JPanel {
 					Clearing(xpos,ypos+1);
 				}
 						
-				if(xpos < mines.length-1&& ypos < mines.length-1 && revealed [xpos+1][ypos+1] != true)//down right
+				if(xpos < mines.length -1 && ypos < mines.length-1 && revealed [xpos+1][ypos+1] != true)//down right
 				{
 					revealed[xpos+1][ypos+1] = true;
 					colorArray[xpos+1][ypos+1] = Color.GRAY;
@@ -346,17 +344,13 @@ public class MyPanel extends JPanel {
 					Clearing(xpos+1,ypos-1);
 				}
 						
-				if(xpos < mines.length-1 && revealed[xpos+1][ypos] != true)//Right
+				if(xpos < mines.length -1 && revealed[xpos+1][ypos] != true)//Right
 				{
 					revealed[xpos+1][ypos]= true;
 					colorArray[xpos+1][ypos] = Color.GRAY;
 					Clearing(xpos+1,ypos);
 				}
 						
-				
 			}
-		
+		}
 	}
-
-		
-}
