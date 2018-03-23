@@ -49,42 +49,7 @@ public class MyPanel extends JPanel {
 				mines[i][j] = 0;
 			}
 			}
-		}
-		for (int x=0;x<TOTAL_COLUMNS;x++)//Array of neighborers mines
-		{
-			for (int y = 0; y < TOTAL_ROWS; y++)
-			{
-				if(mines[x][y] != 1)
-				{
-					int neighborCount = 0;
-					if(x > 0 && y > 0 && mines[x-1][y-1] == 1)//top left 
-						neighborCount++;
-					if(x > 0 && y < mines.length-1 && mines[x-1][y+1] == 1)//down left 
-						neighborCount++;
-					if(x > 0 && mines[x-1][y] == 1)//left
-						neighborCount++;
-					if(y > 0 && mines[x][y-1] == 1)//top
-						neighborCount++;
-					if(y < mines.length -1 && mines[x][y+1] == 1)//bottom
-						neighborCount++;
-					if(x < mines.length -1 && y < mines.length -1 && mines[x+1][y+1] == 1)//down right
-						neighborCount++;
-					if(y > 0 && x < mines.length -1 && y < mines.length && mines[x+1][y-1] == 1)//top right
-						neighborCount++;
-					if(x < mines.length -1 && mines[x+1][y] == 1)//Right
-						neighborCount++;
-					
-					neighbores[x][y]=neighborCount;
-					if(neighborCount == 0)
-						neighboresCount[x][y] = "";
-					else
-						neighboresCount[x][y] = String.valueOf(neighbores[x][y]);
-				}
-				else {
-					neighboresCount[x][y] = " ";
-				}
-			}
-		}
+		}			
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -120,12 +85,12 @@ public class MyPanel extends JPanel {
 
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);		
-					g.setColor(Color.WHITE);
-					g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+800, (y*30)+800);
-					
-					if(flagged[x][y] == true) {
-						g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+38, (y*30)+44);
-					}
+//					g.setColor(Color.WHITE);
+//					g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+800, (y*30)+800);
+//					
+//					if(flagged[x][y] == true) {
+//						g.drawString(neighboresCount[x][y], x *(INNER_CELL_SIZE+1)+38, (y*30)+44);
+//					}
 
 			}
 		}
