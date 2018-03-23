@@ -3,6 +3,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -28,7 +29,17 @@ public class MyPanel extends JPanel {
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Random rand = new Random();
 	public String neighboresCount[][] = new String[TOTAL_COLUMNS][TOTAL_ROWS];
-
+	public int smileyX = 333;
+	public int smileyY = 10;
+	public boolean happiness = true;
+	
+	Date startDate = new Date();
+	public int timeX = 520;
+	public int timeY = 25;
+	public int sec = 0;
+		
+	
+	
 	 
 	public int getTotal_Columns() {
 		return TOTAL_COLUMNS;
@@ -38,7 +49,8 @@ public class MyPanel extends JPanel {
 		return TOTAL_ROWS;
 	}
 	
-	public MyPanel() {   //This is the constructor... this code runs first to initialize
+	public MyPanel() {  //This is the constructor... this code runs first to initialize
+		
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
 		}
@@ -144,6 +156,41 @@ public class MyPanel extends JPanel {
 
 			}
 		}
+		//Smiley face 
+		
+		
+		if(happiness == true) {
+			g.setColor(Color.YELLOW);
+			g.fillOval(smileyX, smileyY, 70, 70);
+			g.setColor(Color.BLACK);
+			g.drawOval(smileyX, smileyY, 70, 70);
+			g.fillOval(smileyX +13, smileyY +20, 12, 12);
+			g.fillOval(smileyX +43, smileyY +20, 12, 12);
+			g.fillRect(smileyX+20, smileyY+50, 30, 5);
+			g.fillRect(smileyX+15, smileyY+45, 5, 5);
+			g.fillRect(smileyX+50, smileyY+45, 5, 5);
+		}else {
+			g.setColor(Color.RED);
+			g.fillOval(smileyX, smileyY, 70, 70);
+			g.setColor(Color.BLACK);
+			g.drawOval(smileyX, smileyY, 70, 70);
+			g.drawString("X", smileyX+42, smileyY +33);
+			g.drawString("X", smileyX+12, smileyY +33);
+			g.fillRect(smileyX+20, smileyY+45, 30, 5);
+			g.fillRect(smileyX+15, smileyY+50, 5, 5);
+			g.fillRect(smileyX+50, smileyY+50, 5, 5);
+			
+		}
+		//timer
+		g.setColor(Color.black);
+		g.fillRect(timeX, timeY, 170, 60);
+		sec = (int) ((new Date().getTime()-startDate.getTime())/1000);
+		System.out.println(sec);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Eras Bold ITC", Font.BOLD, 60));
+		g.drawString(Integer.toString(sec), timeX, timeY+50);
+		g.setFont(new Font("Eras Bold ITC", Font.BOLD, 15));
+		g.drawString("sec", timeX+142, timeY+55);
 		}
 	
 
