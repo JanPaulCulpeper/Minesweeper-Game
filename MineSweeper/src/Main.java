@@ -16,5 +16,6 @@ public class Main {
 		myFrame.setVisible(true);
 		myFrame.setResizable(false);
 		
+		
 	}
 }

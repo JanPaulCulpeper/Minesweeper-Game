@@ -23,12 +23,8 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public int counterBomb = 1;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-<<<<<<< HEAD
-	public int [][] bomb = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	public int [][] numbers = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	public boolean[][] bombArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
-	public boolean[][] flag = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
-	public int[][] bombRandomArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public Random rand = new Random();
+	public String neighboresCount[][] = new String[TOTAL_COLUMNS][TOTAL_ROWS];
 	
 	public int getTotal_Columns() {
 		return TOTAL_COLUMNS;
@@ -37,10 +33,6 @@ public class MyPanel extends JPanel {
 	public int getTotal_Rows() {
 		return TOTAL_ROWS;
 	}
-=======
-	public Random rand = new Random();
-	public String neighboresCount[][] = new String[TOTAL_COLUMNS][TOTAL_ROWS];
->>>>>>> refs/heads/master
 	
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
@@ -80,11 +72,9 @@ public class MyPanel extends JPanel {
 		int y2 = getHeight() - myInsets.bottom;
 		int width = x2 - x1;
 		int height = y2 - y1;
-		
-		
 
 		//Paint the background
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(x1, y1, width + 1, height + 1);//The rest of the grid
 	
 		//Draw the grid minus the bottom row (which has only one cell)
@@ -163,7 +153,6 @@ public class MyPanel extends JPanel {
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 2) {   //Outside the rest of the grid
 			return -1;
 		}
-		System.out.println(x);
 		return x;
 	}
 	public int getGridY(int x, int y) {
@@ -189,8 +178,6 @@ public class MyPanel extends JPanel {
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 2) {   //Outside the rest of the grid
 			return -1;
 		}
-		
 		return y;
 	}
-	
 }

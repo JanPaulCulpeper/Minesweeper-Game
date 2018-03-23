@@ -71,7 +71,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				
 				if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
 					//Had pressed outside
-					//Do nothing
+					//Do nothinr
 				} else {
 					if ((gridX == -1) || (gridY == -1)) {
 						//Is releasing outside
@@ -90,7 +90,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									if(myPanel.mines[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 1) { // If you click on a mine everything is revealed
 										for(int i=0; i < myPanel.getTotal_Columns(); i++) {
 											for(int j=0; j < myPanel.getTotal_Rows(); j++) {
-												if(myPanel.colorArray[i][j] == 1) //Paint mines cells black
+												if(myPanel.mines[i][j] == 1) //Paint mines cells black
 													myPanel.colorArray[i][j] =Color.BLACK;
 												myPanel.revealed[i][j] = true;
 											}
@@ -100,7 +100,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									if(myPanel.revealed[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == true) {
 										
 									}else {
-										myPanel.clearZeros(gridX, gridY);
+										myPanel.Clearing(gridX, gridY);
 									}
 								}
 							}
@@ -108,75 +108,70 @@ public class MyMouseAdapter extends MouseAdapter {
 				}
 				myPanel.repaint();
 				break;
-			}
+			}}
 			case 3:	{	//Right mouse button
 			
-				Component c1 = e.getComponent();
-				while (!(c1 instanceof JFrame)) {
-					c1 = c1.getParent();
-					if (c1 == null) {
+				Component cr = e.getComponent();
+				while (!(cr instanceof JFrame)) {
+					cr = cr.getParent();
+					if (cr == null) {
 						return;
 					}
 				}
-				JFrame myFrame1 = (JFrame)c1;
-				MyPanel myPanel1 = (MyPanel) myFrame1.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
-				Insets myInsets1 = myFrame1.getInsets();
-				int x11 = myInsets1.left;
-				int y11 = myInsets1.top;
-				e.translatePoint(-x11, -y11);
-				int x2 = e.getX();
-				int y2 = e.getY();
-				myPanel1.x = x2;
-				myPanel1.y = y2;
-				int gridX1 = myPanel1.getGridX(x2, y2);
-				int gridY1 = myPanel1.getGridY(x2, y2);
-				if ((myPanel1.mouseDownGridX == -1) || (myPanel1.mouseDownGridY == -1)) {
+				JFrame myRightClickFrame = (JFrame)cr;
+				MyPanel myRightClickPanel = (MyPanel) myRightClickFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+				Insets myRightClickInsets = myRightClickFrame.getInsets();
+				int xr1 = myRightClickInsets.left;
+				int yr1 = myRightClickInsets.top;
+				e.translatePoint(-xr1, -yr1);
+				int xr2 = e.getX();
+				int yr2 = e.getY();
+				myRightClickPanel.x = xr2;
+				myRightClickPanel.y = yr2;
+				int rightClickGridX = myRightClickPanel.getGridX(xr2, yr2);
+				int rightClickGridY = myRightClickPanel.getGridY(xr2, yr2);
+				myRightClickPanel.mouseDownGridX = myRightClickPanel.getGridX(xr2, yr2);
+				myRightClickPanel.mouseDownGridY = myRightClickPanel.getGridY(xr2, yr2);
+				
+				
+				if ((myRightClickPanel.mouseDownGridX == -1) || (myRightClickPanel.mouseDownGridY == -1)) {
 					//Had pressed outside
 					//Do nothing
 				} else {
-					if ((gridX1 == -1) || (gridY1 == -1)) {
+					if ((rightClickGridX == -1) || (rightClickGridY == -1)) {
 						//Is releasing outside
 						//Do nothing
 					} else {
-						if ((myPanel1.mouseDownGridX != gridX1) || (myPanel1.mouseDownGridY != gridY1)) {
+						if ((myRightClickPanel.mouseDownGridX != rightClickGridX) || (myRightClickPanel.mouseDownGridY != rightClickGridY)) {
 							//Released the mouse button on a different cell where it was pressed
-						
-							
-							
 							//Do nothing
-							} else {
-							if ((gridX1 == -1) || (gridY1 == -1)) {
 							
+						} else {
+							//Released the mouse button on the same cell where it was pressed
+								if(myRightClickPanel.revealed[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY]!= true)
+									//does not let you mark revealed spaces
+								{
+									if(myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] == false)
+										//paints the cell if it doesn't have a mine
+									myRightClickPanel.colorArray[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = Color.RED;
+									myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = true;
 						
-							} else {
-					Color newColor1 = null;
-					switch (generator.nextInt(1)) {
-						case 0:
-							newColor1 = Color.RED;
-							myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = newColor1;
-							myPanel1.repaint();
-							
+								}else {
+									myRightClickPanel.flagged[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY]= false;
+									myRightClickPanel.colorArray[myRightClickPanel.mouseDownGridX][myRightClickPanel.mouseDownGridY] = Color.WHITE;
 					}
-							myPanel1.repaint();
+						}
+					}
+				}
+							myRightClickPanel.repaint();
 							break;}
 					
-					
-							}}}}
+			break;
 			default: 
 				//Some other button (2 = Middle mouse button, etc.)
 				//Do nothing
 				break;
-<<<<<<< HEAD
-		}}}
-
-
-		
-=======
-				
-		}
-		}
+				}
 	}
+}
 
-
->>>>>>> refs/heads/master
-	
