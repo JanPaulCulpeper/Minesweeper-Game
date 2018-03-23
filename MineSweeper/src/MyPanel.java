@@ -26,6 +26,15 @@ public class MyPanel extends JPanel {
 	public boolean[][] bombArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	public boolean[][] flag = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	public int[][] bombRandomArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	
+	public int getTotal_Columns() {
+		return TOTAL_COLUMNS;
+	}
+	
+	public int getTotal_Rows() {
+		return TOTAL_ROWS;
+	}
+	
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
