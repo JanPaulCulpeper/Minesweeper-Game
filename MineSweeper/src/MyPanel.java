@@ -191,9 +191,6 @@ public class MyPanel extends JPanel {
 			g.fillRect(smileyX+15, smileyY+45, 5, 5);
 			g.fillRect(smileyX+50, smileyY+45, 5, 5);
 		}else {//bad face
-			if(happiness == false) {
-		}else {
-			
 			g.setColor(Color.RED);
 			g.fillOval(smileyX, smileyY, 70, 70);
 			g.setColor(Color.BLACK);
@@ -227,7 +224,6 @@ public class MyPanel extends JPanel {
 			g.setFont(new Font("Eras Bold ITC", Font.BOLD, 15));
 			g.drawString("sec", timeX+142, timeY+55);
 			}
-	}
 
 	
 
