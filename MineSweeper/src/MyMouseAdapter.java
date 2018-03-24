@@ -3,8 +3,8 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
 
+import javax.swing.JFrame;
 
 
 
@@ -93,6 +93,7 @@ public class MyMouseAdapter extends MouseAdapter {
 												myPanel.revealed[i][j] = true;
 												if(myPanel.revealed[i][j] = true) {
 													myPanel.happiness = false;
+													
 												}
 													
 											}

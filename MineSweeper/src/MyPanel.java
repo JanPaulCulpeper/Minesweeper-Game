@@ -2,8 +2,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.util.Date;
 import java.util.Random;
+
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -27,14 +27,7 @@ public class MyPanel extends JPanel {
 	public int smileyX = 333;
 	public int smileyY = 10;
 	public boolean happiness = true;
-	public boolean victory = false;
-	public boolean defeat = false;
-	
-	
-	Date startDate = new Date();
-	public int timeX = 520;
-	public int timeY = 25;
-	public int sec = 0;
+
 		
 	
 	
@@ -201,29 +194,8 @@ public class MyPanel extends JPanel {
 			g.fillRect(smileyX+15, smileyY+50, 5, 5);
 			g.fillRect(smileyX+50, smileyY+50, 5, 5);
 			}
-			}
-	
-		//timer
-		g.setColor(Color.black);
-		g.fillRect(timeX, timeY, 170, 60);
-		sec = (int) ((new Date().getTime()-startDate.getTime())/1000);
-		if(sec > 999) {
-			sec = 999;
 		}
-		g.setColor(Color.WHITE);
-			g.setFont(new Font("Eras Bold ITC", Font.BOLD, 60));
-			if(sec < 10) {
-				g.drawString("00"+Integer.toString(sec), timeX, timeY+50);
-			}else {
-				if(sec <100) {
-					g.drawString("0"+Integer.toString(sec), timeX, timeY+50);
-				}else {
-					g.drawString(Integer.toString(sec), timeX, timeY+50);
-				}
-			}
-			g.setFont(new Font("Eras Bold ITC", Font.BOLD, 15));
-			g.drawString("sec", timeX+142, timeY+55);
-			}
+	}
 
 	
 
@@ -364,7 +336,6 @@ public class MyPanel extends JPanel {
 					colorArray[xpos+1][ypos] = Color.GRAY;
 					Clearing(xpos+1,ypos);
 				}
-						
-			}
 		}
 	}
+}
